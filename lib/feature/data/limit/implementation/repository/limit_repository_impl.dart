@@ -16,6 +16,6 @@ class _LimitRepositoryImpl implements LimitRepository {
 
         var response = await api.checkLimit({"data": jsonEncode(request)});
 
-        return Limit();
+        return response.data?.map() ?? Limit();
       });
 }

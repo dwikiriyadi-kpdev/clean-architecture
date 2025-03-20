@@ -1,4 +1,3 @@
-import 'package:clean_architecture/feature/data/limit/api/model/limit_available.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
 part 'limit_available_response.freezed.dart';
