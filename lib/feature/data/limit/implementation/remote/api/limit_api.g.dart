@@ -18,13 +18,15 @@ class _LimitApi implements LimitApi {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<LimitResponse> checkLimit(Map<String, String> body) async {
+  Future<ObjectResponse<LimitResponse>> checkLimit(
+    Map<String, String> body,
+  ) async {
     final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
     _data.addAll(body);
-    final _options = _setStreamType<LimitResponse>(
+    final _options = _setStreamType<ObjectResponse<LimitResponse>>(
       Options(method: 'POST', headers: _headers, extra: _extra)
           .compose(
             _dio.options,
@@ -35,9 +37,12 @@ class _LimitApi implements LimitApi {
           .copyWith(baseUrl: _combineBaseUrls(_dio.options.baseUrl, baseUrl)),
     );
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late LimitResponse _value;
+    late ObjectResponse<LimitResponse> _value;
     try {
-      _value = LimitResponse.fromJson(_result.data!);
+      _value = ObjectResponse<LimitResponse>.fromJson(
+        _result.data!,
+        (json) => LimitResponse.fromJson(json as Map<String, dynamic>),
+      );
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
